@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE xml>
+<project name="Story Graphs" default="build">
+	<target name="build" depends="clean,javadoc,compile,jar"/>
+	<target name="clean">
+		<delete dir="doc"/>
+		<delete dir="bin"/>
+		<mkdir dir="bin"/>
+		<delete dir="build"/>
+	</target>
+    <target name="javadoc">
+    	<javadoc
+    		doctitle="Story Graph Library"
+    		classpath="."
+    		sourcepath="src"
+    		destdir="doc"
+    		packagenames="
+    			edu.uky.cs.nil.sg
+    		"
+    		access="protected"
+    		source="16"
+    		use="true"
+    		author="true"
+    		version="true"
+    	/>
+    </target>
+	<target name="compile">
+		<javac
+			classpath="."
+			srcdir="src"
+			destdir="bin"
+			includeantruntime="false"
+		/>
+	</target>
+	<target name="jar">
+        <jar destfile="build/jar/sg.jar">
+        	<fileset dir="src"/>
+        	<fileset dir="bin"/>
+        </jar>
+    </target>
+</project>
