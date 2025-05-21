@@ -2,6 +2,7 @@ package edu.uky.cs.nil.sg;
 
 import java.io.IOException;
 import java.time.Instant;
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 /**
@@ -67,9 +68,41 @@ public class CharacterList extends SymbolList<Character> {
 		}
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 * <p>
+	 * If this method reorders any of the characters in this collection, it will
+	 * also modify all of the {@link State#getUtility(Character) utility values}
+	 * in the graph's {@link StoryGraph#states state objects} to reflect the new
+	 * order of characters, which can take a long time if there are many state
+	 * objects.
+	 */
 	@Override
-	public void remove(Predicate<? super Character> predicate, Status status) {
-		removeAndPrune(
+	public boolean sort(Comparator<? super Character> comparator, Status status) {
+		Character[] original = new Character[1 + size()];
+		original[State.index(null)] = null;
+		for(Character character : this)
+			original[State.index(character)] = new Character(character.getID(), character.name);
+		if(super.sort(comparator, status)) {
+			status.set("Reordering state utility values", graph.states.size());
+			Character[] reordered = new Character[original.length];
+			for(Character character : original)
+				reordered[State.index(get(character.name))] = character;
+			for(State state : graph.states) {
+				double[] utilities = new double[reordered.length];
+				for(int i = 0; i < reordered.length; i++)
+					utilities[i] = state.getUtility(reordered[i]);
+				status.increment();
+			}
+			return true;
+		}
+		else
+			return false;
+	}
+	
+	@Override
+	public boolean remove(Predicate<? super Character> predicate, Status status) {
+		return removeAndPrune(
 			predicate,
 			status,
 			graph.actions,

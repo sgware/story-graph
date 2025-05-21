@@ -143,8 +143,8 @@ public class StateList extends NumberedList<State> {
 	}
 	
 	@Override
-	public void remove(Predicate<? super State> predicate, Status status) {
-		removeAndPrune(
+	public boolean remove(Predicate<? super State> predicate, Status status) {
+		return removeAndPrune(
 			predicate,
 			status,
 			graph.nodes,

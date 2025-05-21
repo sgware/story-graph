@@ -83,9 +83,11 @@ public abstract class StoryGraphCollection<T> implements Iterable<T> {
 	 * @param element the element to remove
 	 * @param status a status object that will be updated while this method runs
 	 * to reflect its current progress
+	 * @return true if the element was returned and the graph was modified,
+	 * false if nothing was removed and the graph was not modified
 	 */
-	public void remove(T element, Status status) {
-		remove(object -> Utilities.equals(object, element), status);
+	public boolean remove(T element, Status status) {
+		return remove(object -> Utilities.equals(object, element), status);
 	}
 	
 	/**
@@ -93,10 +95,12 @@ public abstract class StoryGraphCollection<T> implements Iterable<T> {
 	 * collection without reporting the method's progress while it runs.
 	 * 
 	 * @param element the element to remove
+	 * @return true if the element was returned and the graph was modified,
+	 * false if nothing was removed and the graph was not modified
 	 * @see #remove(Object, Status)
 	 */
-	public void remove(T element) {
-		remove(element, new Status());
+	public boolean remove(T element) {
+		return remove(element, new Status());
 	}
 	
 	/**
@@ -113,9 +117,11 @@ public abstract class StoryGraphCollection<T> implements Iterable<T> {
 	 * removed
 	 * @param status a status object that will be updated while this method runs
 	 * to reflect its current progress
+	 * @return true if any elements were removed and the graph was modified,
+	 * false if nothing was removed and the graph was not modified
 	 */
-	public void remove(Predicate<? super T> predicate, Status status) {
-		removeAndPrune(predicate, status);
+	public boolean remove(Predicate<? super T> predicate, Status status) {
+		return removeAndPrune(predicate, status);
 	}
 	
 	/**
@@ -125,10 +131,12 @@ public abstract class StoryGraphCollection<T> implements Iterable<T> {
 	 * 
 	 * @param predicate a predicate that specifies which elements should be
 	 * removed
+	 * @return true if any elements were removed and the graph was modified,
+	 * false if nothing was removed and the graph was not modified
 	 * @see #remove(Predicate, Status)
 	 */
-	public void remove(Predicate<? super T> predicate) {
-		remove(predicate, new Status());
+	public boolean remove(Predicate<? super T> predicate) {
+		return remove(predicate, new Status());
 	}
 	
 	/**
@@ -144,9 +152,11 @@ public abstract class StoryGraphCollection<T> implements Iterable<T> {
 	 * @param collections other story graph collections that might have been
 	 * affected when elements were removed from this list and which may need to
 	 * be pruned and renumbered as a result
+	 * @return true if any elements were removed and the graph was modified,
+	 * false if nothing was removed and the graph was not modified
 	 */
 	@SuppressWarnings("unchecked")
-	void removeAndPrune(Predicate<? super T> predicate, Status status, StoryGraphCollection<?>...collections) {
+	boolean removeAndPrune(Predicate<? super T> predicate, Status status, StoryGraphCollection<?>...collections) {
 		if(prune(object -> validate(object) && predicate.test((T) object), status)) {
 			boolean[] renumber = new boolean[collections.length];
 			for(int i = 0; i < collections.length; i++)
@@ -156,7 +166,10 @@ public abstract class StoryGraphCollection<T> implements Iterable<T> {
 				if(renumber[i])
 					collections[i].renumber(status);
 			graph.meta.set(MetaData.MODIFIED, Instant.now());
+			return true;
 		}
+		else
+			return false;
 	}
 	
 	/**

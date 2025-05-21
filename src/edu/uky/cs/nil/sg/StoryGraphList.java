@@ -60,14 +60,10 @@ public abstract class StoryGraphList<T> extends StoryGraphCollection<T> implemen
 	 * This method will also update the {@link StoryGraph#meta story graph's
 	 * meta-data} with the new number of elements of {@link #getMetaDataKey()
 	 * this type} and the {@link MetaData#MODIFIED last modified} timestamp.
-	 * 
-	 * @param element the element to remove
-	 * @param status a status object that will be updated while this method runs
-	 * to reflect its current progress
 	 */
 	@Override
-	public void remove(T element, Status status) {
-		super.remove(element, status);
+	public boolean remove(T element, Status status) {
+		return super.remove(element, status);
 	}
 	
 	/**
@@ -76,15 +72,10 @@ public abstract class StoryGraphList<T> extends StoryGraphCollection<T> implemen
 	 * This method will also update the {@link StoryGraph#meta story graph's
 	 * meta-data} with the new number of elements of {@link #getMetaDataKey()
 	 * this type} and the {@link MetaData#MODIFIED last modified} timestamp.
-	 * 
-	 * @param predicate a predicate that specifies which elements should be
-	 * removed
-	 * @param status a status object that will be updated while this method runs
-	 * to reflect its current progress
 	 */
 	@Override
-	public void remove(Predicate<? super T> predicate, Status status) {
-		super.remove(predicate, status);
+	public boolean remove(Predicate<? super T> predicate, Status status) {
+		return super.remove(predicate, status);
 	}
 	
 	/**
@@ -92,9 +83,6 @@ public abstract class StoryGraphList<T> extends StoryGraphCollection<T> implemen
 	 * <p>
 	 * This method updates the {@link StoryGraph#meta story graph's meta-data}
 	 * with the new number of elements of {@link #getMetaDataKey() this type}.
-	 * 
-	 * @param status a status object that will be updated while this method runs
-	 * to reflect its current progress
 	 */
 	@Override
 	protected abstract void renumber(Status status);

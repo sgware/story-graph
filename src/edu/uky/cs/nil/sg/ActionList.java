@@ -97,8 +97,8 @@ public class ActionList extends SymbolList<Action> {
 	}
 	
 	@Override
-	public void remove(Predicate<? super Action> predicate, Status status) {
-		removeAndPrune(
+	public boolean remove(Predicate<? super Action> predicate, Status status) {
+		return removeAndPrune(
 			predicate,
 			status,
 			graph.plans,

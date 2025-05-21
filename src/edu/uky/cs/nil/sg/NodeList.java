@@ -113,8 +113,8 @@ public class NodeList extends NumberedList<Node> {
 	}
 	
 	@Override
-	public void remove(Predicate<? super Node> predicate, Status status) {
-		removeAndPrune(
+	public boolean remove(Predicate<? super Node> predicate, Status status) {
+		return removeAndPrune(
 			predicate,
 			status,
 			graph.edges.temporal,

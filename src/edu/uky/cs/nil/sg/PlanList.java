@@ -125,8 +125,8 @@ public class PlanList extends NumberedList<Plan> {
 	}
 	
 	@Override
-	public void remove(Predicate<? super Plan> predicate, Status status) {
-		removeAndPrune(
+	public boolean remove(Predicate<? super Plan> predicate, Status status) {
+		return removeAndPrune(
 			predicate,
 			status,
 			graph.explanations

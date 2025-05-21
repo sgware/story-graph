@@ -46,8 +46,8 @@ public class ValueList extends SymbolList<NominalValue> {
 	}
 	
 	@Override
-	public void remove(Predicate<? super NominalValue> predicate, Status status) {
-		removeAndPrune(
+	public boolean remove(Predicate<? super NominalValue> predicate, Status status) {
+		return removeAndPrune(
 			predicate,
 			status,
 			graph.states

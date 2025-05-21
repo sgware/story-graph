@@ -200,8 +200,10 @@ public abstract class SymbolList<S extends Symbol> extends StoryGraphList<S> {
 	 * @param comparator the comparator that defines the new order of elements
 	 * @param status a status object that will be updated while this method runs
 	 * to reflect its current progress
+	 * @return true if any elements were reordered, false if all elements
+	 * remained in the same order
 	 */
-	public void sort(Comparator<? super S> comparator, Status status) {
+	public boolean sort(Comparator<? super S> comparator, Status status) {
 		status.set("Sorting " + getPlural(), (long) size());
 		if(size() > 0)
 			status.setCount(1);
@@ -222,6 +224,7 @@ public abstract class SymbolList<S extends Symbol> extends StoryGraphList<S> {
 			renumber(status);
 			graph.meta.set(MetaData.MODIFIED, Instant.now());
 		}
+		return modified;
 	}
 	
 	/**
@@ -229,10 +232,12 @@ public abstract class SymbolList<S extends Symbol> extends StoryGraphList<S> {
 	 * collection without reporting the method's progress while it runs.
 	 * 
 	 * @param comparator the comparator that defines the new order of elements
+	 * @return true if any elements were reordered, false if all elements
+	 * remained in the same order
 	 * @see #sort(Comparator, Status)
 	 */
-	public void sort(Comparator<? super S> comparator) {
-		sort(comparator, new Status());
+	public boolean sort(Comparator<? super S> comparator) {
+		return sort(comparator, new Status());
 	}
 	
 	@Override
@@ -300,13 +305,6 @@ public abstract class SymbolList<S extends Symbol> extends StoryGraphList<S> {
 		}
 	}
 	
-	/*
-	@Override
-	protected void readComments(GraphReader reader, Status status) throws IOException {
-		super.readComments(reader, status);
-	}
-	*/
-	
 	@Override
 	protected void write(GraphWriter writer, Status status) throws IOException {
 		writeSymbols(writer, status);
@@ -329,11 +327,4 @@ public abstract class SymbolList<S extends Symbol> extends StoryGraphList<S> {
 		}
 		status.setMessage("Wrote " + status.getCount() + " " + getPlural());
 	}
-	
-	/*
-	@Override
-	protected void writeComments(GraphWriter writer, Status status) throws IOException {
-		super.writeComments(writer, status);
-	}
-	*/
 }

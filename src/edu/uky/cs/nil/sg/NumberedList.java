@@ -127,8 +127,10 @@ public abstract class NumberedList<N extends Numbered> extends StoryGraphList<N>
 	 * @param comparator the comparator that defines the new order of elements
 	 * @param status a status object that will be updated while this method runs
 	 * to reflect its current progress
+	 * @return true if any elements were reordered, false if all elements
+	 * remained in the same order
 	 */
-	public void sort(Comparator<? super N> comparator, Status status) {
+	public boolean sort(Comparator<? super N> comparator, Status status) {
 		status.set("Sorting " + getPlural(), (long) size());
 		if(size() > 0)
 			status.setCount(1);
@@ -151,6 +153,7 @@ public abstract class NumberedList<N extends Numbered> extends StoryGraphList<N>
 			renumber(status);
 			graph.meta.set(MetaData.MODIFIED, Instant.now());
 		}
+		return modified;
 	}
 	
 	/**
@@ -158,10 +161,12 @@ public abstract class NumberedList<N extends Numbered> extends StoryGraphList<N>
 	 * this collection without reporting the method's progress while it runs.
 	 * 
 	 * @param comparator the comparator that defines the new order of elements
+	 * @return true if any elements were reordered, false if all elements
+	 * remained in the same order
 	 * @see #sort(Comparator, Status)
 	 */
-	public void sort(Comparator<? super N> comparator) {
-		sort(comparator, new Status());
+	public boolean sort(Comparator<? super N> comparator) {
+		return sort(comparator, new Status());
 	}
 	
 	@Override
