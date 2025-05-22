@@ -92,6 +92,7 @@ public class CharacterList extends SymbolList<Character> {
 				double[] utilities = new double[reordered.length];
 				for(int i = 0; i < reordered.length; i++)
 					utilities[i] = state.getUtility(reordered[i]);
+				state.setUtilities(utilities);
 				status.increment();
 			}
 			return true;
