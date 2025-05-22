@@ -61,7 +61,7 @@ public interface Task {
 			catch(TimeoutException exception) {
 				String string = status.toString();
 				pad = Math.max(pad, string.length());
-				System.out.println("\r" + String.format("%-" + pad + "s", string));
+				System.out.print("\r" + String.format("%-" + pad + "s", string));
 				hasPrinted = true;
 			}
 			catch(CancellationException | InterruptedException exception) {
