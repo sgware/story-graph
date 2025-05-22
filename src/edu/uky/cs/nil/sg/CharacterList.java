@@ -87,7 +87,7 @@ public class CharacterList extends SymbolList<Character> {
 			status.set("Reordering state utility values", graph.states.size());
 			Character[] reordered = new Character[original.length];
 			for(Character character : original)
-				reordered[State.index(get(character.name))] = character;
+				reordered[State.index(character == null ? null : get(character.name))] = character;
 			for(State state : graph.states) {
 				double[] utilities = new double[reordered.length];
 				for(int i = 0; i < reordered.length; i++)
