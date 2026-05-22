@@ -29,7 +29,7 @@ public class MetaData {
 	/** Meta-data key for the timestamp when this graph was created */
 	public static final String CREATED = "created";
 	
-	/** Meta-data key for the timestemp when this graph was last modified */
+	/** Meta-data key for the timestamp when this graph was last modified */
 	public static final String MODIFIED = "modified";
 	
 	/** Meta-data key for the title of the story graph */

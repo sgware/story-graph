@@ -7,14 +7,27 @@ package edu.uky.cs.nil.sg;
  */
 public class Settings {
 	
-	/** The major version number comes before the decimal points */
-	public static final int MAJOR_VERSION_NUMBER = 0;
+	/**
+	 * The major version number, which represents big changes that are not
+	 * backwards compatible with earlier major versions
+	 */
+	public static final int MAJOR_VERSION_NUMBER = 1;
 	
-	/** The minor version number comes after the decimal point */
-	public static final int MINOR_VERSION_NUMBER = 9;
+	/**
+	 * The minor version number, which represents added functionality that is
+	 * backwards compatible with earlier versions that have the same major
+	 * version number
+	 */
+	public static final int MINOR_VERSION_NUMBER = 0;
+	
+	/**
+	 * The patch version number, which represents bug fixes but no changes in
+	 * functionality
+	 */
+	public static final int PATCH_VERSION_NUMBER = 0;
 	
 	/** The full version number (major + minor) as a string */
-	public static final String VERSION_STRING = MAJOR_VERSION_NUMBER + "." + MINOR_VERSION_NUMBER;
+	public static final String VERSION_STRING = MAJOR_VERSION_NUMBER + "." + MINOR_VERSION_NUMBER + "." + PATCH_VERSION_NUMBER;
 	
 	/**
 	 * Story graph elements that should be removed will have their ID numbers
