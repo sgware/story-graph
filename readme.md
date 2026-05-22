@@ -21,6 +21,36 @@ action. Similarly, while characters can have wrong beliefs, they cannot have
 uncertain beliefs. They can believe the wrong thing, but they cannot believe one
 of several possible things.
 
+## Download and Documentation
+
+This library is written in pure Java with no dependencies. You can
+[download the JAR file here](https://github.com/sgware/story-graph/tree/main/build/jar).
+
+The [JavaDoc API is here](https://sgware.github.io/story-graph).
+
+You can compile this library from source like this:
+```
+git clone https://github.com/sgware/story-graph.git
+cd story-graph
+mvn clean install
+```
+
+You can add this library to a Maven project's `pom.xml` file like this:
+```
+<project>
+  ...
+  <dependencies>
+    <!-- Story Graph Library -->
+    <dependency>
+      <groupId>edu.uky.cs.nil</groupId>
+      <artifactId>story-graph</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+  </dependencies>
+  ...
+</project>
+```
+
 ## Story Graph Elements
 
 Story graphs have the following elements:
@@ -90,8 +120,8 @@ usually a plan to increase the author utility, but this is not required.
 ## Story Graph API
 
 The main object is
-[`StoryGraph`](src/edu/uky/cs/nil/sg/StoryGraph.java) which can be read from and
-written to file like this:
+[`StoryGraph`](https://sgware.github.io/story-graph/edu/uky/cs/nil/sg/StoryGraph.html)
+which can be read from and written to file like this:
 
 ```
 // Read a story graph from file "input.zip".
@@ -101,11 +131,13 @@ sg.write(new File("output.zip"));
 ```
 
 Operations on large story graphs can take a long time. Methods which might run
-a long time accept a [`Status`](src/edu/uky/cs/nil/sg/Status.java) object as an
-argument which they update to reflect their current progress. The current status
-can be seen by calling `Status#toString()`. The
-[`Task`](src/edu/uky/cs/nil/sg/Task.java) interface can be used to run an
-operation on a different thread and print occasional status updates.
+a long time accept a
+[`Status`](https://sgware.github.io/story-graph/edu/uky/cs/nil/sg/Status.html)
+object as an argument which they update to reflect their current progress. The
+current status can be seen by calling `Status#toString()`. The
+[`Task`](https://sgware.github.io/story-graph/edu/uky/cs/nil/sg/Task.html)
+interface can be used to run an operation on a different thread and print
+occasional status updates.
 
 ```
 // By default, the status prints once per second.
@@ -121,11 +153,11 @@ Task.run(status -> {
 ```
 
 Characters, fluents, nominal values, and actions are all
-[`Symbol`](src/edu/uky/cs/nil/sg/Symbol.java)s. A symbol has both an `int` ID
-number and a `String` name. The ID numbers are unique and sequential starting at
-0. Names must also be unique. The `SymbolList#add(String)` method is used to
-create a new symbol or to return an existing symbol if one with that name
-already exists.
+[`Symbol`](https://sgware.github.io/story-graph/edu/uky/cs/nil/sg/Symbol.html)s.
+A symbol has both an `int` ID number and a `String` name. The ID numbers are
+unique and sequential starting at 0. Names must also be unique. The
+`SymbolList#add(String)` method is used to create a new symbol or to return an
+existing symbol if one with that name already exists.
 
 ```
 // Make a new story graph.
@@ -154,11 +186,12 @@ sg.characters.setPlayer(alice, true);
 ```
 
 Nodes, temporal edges, epistemic edges, and explanations are
-[`Numbered`](src/edu/uky/cs/nil/sg/Numbered.java). A numbered element has a
-`long` ID number but no name. Numbered elements are stored in a
-[custom array list](src/edu/uky/cs/nil/sg/BigArrayList.java) which can hold just
-over 1 trillion elements. A graph cannot have more than 2<sup>40</sup> nodes,
-temporal edges, epistemic edges, or explanations.
+[`Numbered`](https://sgware.github.io/story-graph/edu/uky/cs/nil/sg/Numbered.html).
+A numbered element has a `long` ID number but no name. Numbered elements are
+stored in a
+[custom array list](https://sgware.github.io/story-graph/edu/uky/cs/nil/sg/BigArrayList.html)
+which can hold just over 1 trillion elements. A graph cannot have more than
+2<sup>40</sup> nodes, temporal edges, epistemic edges, or explanations.
 
 ```
 // Get the fluent for Alice's location.
@@ -238,12 +271,14 @@ elements in a hash table of some kind, modifying the graph may cause that hash
 table to become unreliable.
 
 There are two additional numbered elements that you typically will not interact
-with directly: [State](src/edu/uky/cs/nil/sg/State.java) and
-[Plan](src/edu/uky/cs/nil/sg/Plan.java). These are used by nodes and
-explanations respectively. The graph has the opportunity to reuse state and plan
-objects to save space. States and plans do not have comments.
+with directly:
+[State](https://sgware.github.io/story-graph/edu/uky/cs/nil/sg/State.html) and
+[Plan](https://sgware.github.io/story-graph/edu/uky/cs/nil/sg/Plan.html). These
+are used by nodes and explanations respectively. The graph has the opportunity
+to reuse state and plan objects to save space. States and plans do not have
+comments.
 
-The full API is [documented here](doc).
+The full API is [documented here](https://sgware.github.io/story-graph).
 
 ## Story Graph File Format
 
