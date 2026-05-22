@@ -347,7 +347,7 @@ software for other kinds of projects.
 
 ## Version History
 
-- Version 0.9: First public release.
+- Version 1.0.0: First public release.
 
 ## Citation
 
