@@ -89,7 +89,7 @@ public interface GraphWriter extends AutoCloseable {
 				line += ((Symbol) array[i]).getID();
 			else if(array[i] instanceof NumericValue || array[i] instanceof Double) {
 				String s = array[i].toString();
-				if(!s.contains("."))
+				if(!s.contains(".") && !(s.equals(Double.toString(Double.NaN)) || s.equals(Double.toString(Double.POSITIVE_INFINITY)) || s.equals(Double.toString(Double.NEGATIVE_INFINITY))))
 					s += ".0";
 				line += s;
 			}

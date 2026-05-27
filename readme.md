@@ -28,7 +28,8 @@ This library is written in pure Java with no dependencies. You can
 
 The [JavaDoc API is here](https://sgware.github.io/story-graph).
 
-You can compile this library from source like this:
+You can download and compile this library from source using
+[Maven](http://maven.apache.org/) like this:
 ```
 git clone https://github.com/sgware/story-graph.git
 cd story-graph
@@ -44,7 +45,7 @@ You can add this library to a Maven project's `pom.xml` file like this:
     <dependency>
       <groupId>edu.uky.cs.nil</groupId>
       <artifactId>story-graph</artifactId>
-      <version>1.0.0</version>
+      <version>1.0.0</version> <!-- use most recent version -->
     </dependency>
   </dependencies>
   ...
@@ -322,7 +323,10 @@ numeric value. The value in the second column is the ID number of the value
 assigned to the fluent with ID number 1 or a number if the value is a numeric
 value, etc. The first column after the fluent values is the author utility. The
 first column after the author utility is the utility for the character with ID
-number 0, etc. Utility values are numbers.
+number 0, etc. Utility values are numeric values. Numeric values always contain
+a decimal point to distinguish them from value indices (e.g. 5 is written
+`5.0`). There are three special numeric values `NaN`, `Infinity`, and
+`-Infinity`.
 - `actions.txt`: The name of each action, one per line. The first action listed
 will have ID number 0, etc.
 - `consent.csv`: A list of consenting characters for each action. The first line

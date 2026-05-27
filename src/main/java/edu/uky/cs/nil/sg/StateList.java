@@ -213,6 +213,12 @@ public class StateList extends NumberedList<State> {
 						values[i] = null;
 					else if(line[i].contains("."))
 						values[i] = NumericValue.get(line[i]);
+					else if(line[i].equals(Double.toString(Double.NaN)))
+						values[i] = NumericValue.get(Double.NaN);
+					else if(line[i].equals(Double.toString(Double.POSITIVE_INFINITY)))
+						values[i] = NumericValue.get(Double.POSITIVE_INFINITY);
+					else if(line[i].equals(Double.toString(Double.NEGATIVE_INFINITY)))
+						values[i] = NumericValue.get(Double.NEGATIVE_INFINITY);
 					else
 						values[i] = graph.values.get(Utilities.toInteger(line[i]));
 				}
