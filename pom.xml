@@ -6,8 +6,28 @@
   <version>1.0.0</version>
   <packaging>jar</packaging>
   <name>Story Graph Library</name>
-  <description>A Java library for creating, pruning, reading, and writing graphs that represent all states in a planned interactive narrative.</description>
+  <description>A Java library for creating, pruning, reading, and writing graphs that represent states in a planned interactive narrative.</description>
   <url>http://github.com/sgware/story-graph</url>
+  <!-- License -->
+  <licenses>
+    <license>
+      <name>GPL-3.0</name>
+      <url>http://opensource.org/license/gpl-3.0</url>
+    </license>
+  </licenses>
+  <!-- Developers -->
+  <developers>
+    <developer>
+      <name>Stephen G. Ware</name>
+      <email>sgware@cs.uky.edu</email>
+    </developer>
+  </developers>
+  <!-- Source Control -->
+  <scm>
+    <connection>scm:git:git://github.com/sgware/story-graph.git</connection>
+    <developerConnection>scm:git:ssh://github.com:sgware/story-graph.git</developerConnection>
+    <url>http://github.com/sgware/story-graph/tree/main</url>
+  </scm>
   <!-- Properties -->
   <properties>
     <!-- UTF-8 Encoding -->
@@ -32,7 +52,7 @@
     </resources>
     <!-- Plugins -->
     <plugins>
-      <!-- Delete files and folders during clean phase. -->
+      <!-- Delete the docs and build folder during the clean phase. -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-clean-plugin</artifactId>
@@ -41,8 +61,6 @@
           <filesets>
             <fileset>
               <directory>${basedir}/docs</directory>
-            </fileset>
-            <fileset>
               <directory>${basedir}/build</directory>
             </fileset>
           </filesets>
@@ -86,15 +104,49 @@
           </execution>
         </executions>
       </plugin>
-      <!-- Copy the JAR file into the /build/jar folder. -->
+      <!-- Create a JAR file for all source files. -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.4.0</version>
+        <executions>
+          <execution>
+            <id>attach-source</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- Create a JAR file the includes both the compiled code and source. -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.8.0</version>
+        <configuration>
+          <descriptors>
+            <descriptor>src/assembly/jar-all.xml</descriptor>
+          </descriptors>
+        </configuration>
+        <executions>
+          <execution>
+            <id>jar-all</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- Copy the JAR file with source into the build/jar folder. -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
         <version>3.9.0</version>
         <executions>
           <execution>
-            <id>copy-packaged</id>
-            <phase>package</phase>
+            <id>copy-installed</id>
+            <phase>install</phase>
             <goals>
               <goal>copy</goal>
             </goals>
@@ -104,14 +156,41 @@
                   <groupId>${project.groupId}</groupId>
                   <artifactId>${project.artifactId}</artifactId>
                   <version>${project.version}</version>
+                  <classifier>all</classifier>
                   <type>${project.packaging}</type>
                 </artifactItem>
               </artifactItems>
               <outputDirectory>${basedir}/build/jar</outputDirectory>
               <stripVersion>true</stripVersion>
+              <stripClassifier>true</stripClassifier>
             </configuration>
           </execution>
         </executions>
+      </plugin>
+      <!-- Generate file checksums -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>3.2.8</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- Publish to the Maven Central Repository -->
+      <plugin>
+        <groupId>org.sonatype.central</groupId>
+        <artifactId>central-publishing-maven-plugin</artifactId>
+        <version>0.10.0</version>
+        <extensions>true</extensions>
+        <configuration>
+          <publishingServerId>central</publishingServerId>
+        </configuration>
       </plugin>
     </plugins>
   </build>
