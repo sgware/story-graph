@@ -1,5 +1,7 @@
 package edu.uky.cs.nil.sg;
 
+import java.util.Iterator;
+
 /**
  * A sequence of {@link Action actions}, such as a {@link Plan plan} or {@link
  * Explanation explanation}.
@@ -7,6 +9,11 @@ package edu.uky.cs.nil.sg;
  * @author Stephen G. Ware
  */
 public interface Sequence extends Iterable<Action>, Consenting {
+	
+	@Override
+	public default Iterator<Action> iterator() {
+		return new SequenceIterator(this);
+	}
 	
 	@Override
 	public default boolean isAuthor() {

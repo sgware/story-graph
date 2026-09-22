@@ -386,6 +386,7 @@ software for other kinds of projects.
 
 ## Version History
 
+- Version 1.1.0: Added SequenceIterator.
 - Version 1.0.0: First public release.
 
 ## Citation

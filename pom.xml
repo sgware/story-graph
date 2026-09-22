@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>edu.uky.cs.nil</groupId>
   <artifactId>story-graph</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
   <packaging>jar</packaging>
   <name>Story Graph Library</name>
   <description>A Java library for creating, pruning, reading, and writing graphs that represent states in a planned interactive narrative.</description>

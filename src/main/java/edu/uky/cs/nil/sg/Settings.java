@@ -18,7 +18,7 @@ public class Settings {
 	 * backwards compatible with earlier versions that have the same major
 	 * version number
 	 */
-	public static final int MINOR_VERSION_NUMBER = 0;
+	public static final int MINOR_VERSION_NUMBER = 1;
 	
 	/**
 	 * The patch version number, which represents bug fixes but no changes in

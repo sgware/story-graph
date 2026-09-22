@@ -1,6 +1,5 @@
 package edu.uky.cs.nil.sg;
 
-import java.util.Iterator;
 import java.util.function.Predicate;
 
 /**
@@ -35,37 +34,6 @@ public abstract class Plan extends Numbered implements Iterable<Action>, Compara
 		for(Action action : this)
 			string += " " + action;
 		return string + "]";
-	}
-	
-	/**
-	 * An {@link Iterator} for the {@link Action actions} in a {@link Plan
-	 * plan}.
-	 * 
-	 * @author Stephen G. Ware
-	 */
-	private final class PlanIterator implements Iterator<Action> {
-		
-		/**
-		 * The index of the action to return on the next call to {@link #next()}
-		 */
-		private int index = 0;
-		
-		@Override
-		public boolean hasNext() {
-			return index < size();
-		}
-		
-		@Override
-		public Action next() {
-			if(!hasNext())
-				throw Exceptions.iteratorEmpty();
-			return get(index++);
-		}
-	}
-	
-	@Override
-	public Iterator<Action> iterator() {
-		return new PlanIterator();
 	}
 	
 	@Override

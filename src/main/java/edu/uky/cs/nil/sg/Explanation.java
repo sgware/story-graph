@@ -14,7 +14,7 @@ import java.util.function.Predicate;
  * 
  * @author Stephen G. Ware
  */
-public class Explanation extends Numbered implements Iterable<Action>, Commented, Sequence {
+public class Explanation extends Numbered implements Commented, Sequence {
 	
 	/** The node at which the plan begins */
 	public final Node node;
